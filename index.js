@@ -1,7 +1,7 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 1 + Math.floor(Math.random() * 10); // Number of cells horizontally
-const cellsVertical = 1 + Math.floor(Math.random() * 5); // Number of cells vertically
+const cellsHorizontal = 20 + Math.floor(Math.random() * 10); // Number of cells horizontally
+const cellsVertical = 20 + Math.floor(Math.random() * 5); // Number of cells vertically
 const width = window.innerWidth;
 const height = window.innerHeight;
 
