@@ -8,6 +8,7 @@ body {
 .start {
   display: flex;
   position: absolute;
+  flex-direction: column;
   z-index: 1;
   align-items: center;
   justify-content: center;
@@ -18,7 +19,7 @@ body {
 }
 
 .text-start {
-  font-size: 60px;
+  font-size: 3rem;
   color: hsl(120, 50%, 50%);
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -46,6 +47,7 @@ body {
 .winner {
   display: flex;
   position: absolute;
+  flex-direction: column;
   z-index: 1;
   align-items: center;
   justify-content: center;
@@ -59,7 +61,7 @@ body {
 
 .win-text {
   color: whitesmoke;
-  font-size: 64px;
+  font-size: 3rem;
   text-align: center;
   animation: slideDown 3s ease;
 }
@@ -67,7 +69,7 @@ body {
 .replay-text {
   color: whitesmoke;
   text-align: center;
-  font-size: 30px;
+  font-size: 2rem;
   animation: slideUp 3s ease;
 }
 
