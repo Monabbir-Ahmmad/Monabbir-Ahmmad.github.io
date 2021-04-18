@@ -224,19 +224,19 @@ World.add(world, ball);
 document.addEventListener("keydown", (event) => {
   const { x, y } = ball.velocity;
 
-  if (event.key === "w") {
+  if (event.key === "w" || event.key === "W") {
     Body.setVelocity(ball, { x, y: -5 });
   }
 
-  if (event.key === "d") {
+  if (event.key === "d" || event.key === "D") {
     Body.setVelocity(ball, { x: 5, y });
   }
 
-  if (event.key === "s") {
+  if (event.key === "s" || event.key === "S") {
     Body.setVelocity(ball, { x, y: 5 });
   }
 
-  if (event.key === "a") {
+  if (event.key === "a" || event.key === "A") {
     Body.setVelocity(ball, { x: -5, y });
   }
 });
