@@ -1,7 +1,7 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 1 + Math.floor(Math.random() * 10); // Number of cells horizontally
-const cellsVertical = 1 + Math.floor(Math.random() * 5); // Number of cells vertically
+const cellsHorizontal = 20 + Math.floor(Math.random() * 10); // Number of cells horizontally
+const cellsVertical = 20 + Math.floor(Math.random() * 5); // Number of cells vertically
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -224,19 +224,19 @@ World.add(world, ball);
 document.addEventListener("keydown", (event) => {
   const { x, y } = ball.velocity;
 
-  if (event.key === "w" || event.key === "W") {
+  if (event.key === "w") {
     Body.setVelocity(ball, { x, y: -5 });
   }
 
-  if (event.key === "d" || event.key === "D") {
+  if (event.key === "d") {
     Body.setVelocity(ball, { x: 5, y });
   }
 
-  if (event.key === "s" || event.key === "S") {
+  if (event.key === "s") {
     Body.setVelocity(ball, { x, y: 5 });
   }
 
-  if (event.key === "a" || event.key === "A") {
+  if (event.key === "a") {
     Body.setVelocity(ball, { x: -5, y });
   }
 });
