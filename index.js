@@ -1,16 +1,18 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 20 + Math.floor(Math.random() * 10); // Number of cells horizontally
-const cellsVertical = 20 + Math.floor(Math.random() * 5); // Number of cells vertically
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = window.innerWidth; // Viewport width
+const height = window.innerHeight; // Viewport height
+
+const cellsHorizontal = 30 + Math.floor(Math.random() * 20); // Number of cells horizontally
+const cellsVertical = Math.ceil((cellsHorizontal * height) / width); // Number of cells vertically
 
 const unitLengthX = width / cellsHorizontal; // Single all length horizontally
 const unitLengthY = height / cellsVertical; // Single all length vertically
 
-const wallColor = "hsl(0,50%,50%)"; // Wall color
-const ballColor = "hsl(220,50%,50%)"; // Ball color
-const goalColor = "hsl(120,50%,40%)"; // Goal color
+const wallThickness = 3.5; // Wall thickness
+const wallColor = "hsl(0,60%,50%)"; // Wall color
+const ballColor = "hsl(220,60%,50%)"; // Ball color
+const goalColor = "hsl(120,60%,40%)"; // Goal color
 
 // Engin initialization
 const engine = Engine.create();
@@ -153,7 +155,7 @@ horizontals.forEach((row, rowIndex) => {
       columnIndex * unitLengthX + unitLengthX / 2,
       rowIndex * unitLengthY + unitLengthY,
       unitLengthX,
-      5,
+      wallThickness,
       {
         label: "wall",
         isStatic: true,
@@ -176,7 +178,7 @@ verticals.forEach((row, rowIndex) => {
     const wall = Bodies.rectangle(
       columnIndex * unitLengthX + unitLengthX,
       rowIndex * unitLengthY + unitLengthY / 2,
-      5,
+      wallThickness,
       unitLengthY,
       {
         label: "wall",
