@@ -107,7 +107,7 @@ function init() {
 //Add particle into particle array
 function addParticle(x, y, radius) {
   let velocity = 5;
-  let color = "rgba(256,256,256)";
+  let color = "rgba(100,100,100)";
   let dx = randomIntFromInterval(-velocity, velocity);
   let dy = randomIntFromInterval(-velocity, velocity);
   particleArray.push(new Particle(x, y, radius, dx, dy, color));
@@ -123,7 +123,7 @@ function particleConnect() {
         (particleArray[i].y - particleArray[j].y) ** 2;
       if (distance < (canvas.width * canvas.height) / 100) {
         opacity = 1 - distance / 20000;
-        ctx.strokeStyle = "rgba(256,256,256," + opacity + ")";
+        ctx.strokeStyle = "rgba(100,100,100," + opacity + ")";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(particleArray[i].x, particleArray[i].y);
