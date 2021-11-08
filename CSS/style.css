@@ -1,18 +1,46 @@
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
-
 :root {
   --color-primary: #4c0094;
 }
 
 * {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
-  overflow: hidden;
 }
 
-canvas {
-  border: 2px solid white;
-  background-color: white;
+body {
+  background-color: rgb(0, 0, 0);
+  overflow: hidden;
+}
+.container {
+  padding: 10px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container label {
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.container input[type="number"] {
+  font-size: 16px;
+  margin: 0 10px;
+  padding: 10px 0px 10px 10px;
+  outline: none;
+  border: none;
+}
+
+.container input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  margin: -10px 0px;
+  padding: 10px;
 }
