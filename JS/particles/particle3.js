@@ -44,37 +44,10 @@ canvas.addEventListener("click", (event) => {
   addGravityPoint(event.x, event.y);
 });
 
-function init() {
-  //Create particle array
-  particleArray.length = 0;
-  for (let i = 0; i < particleNumber; i++) {
-    particleArray.push(new Particle());
-  }
-}
-
-//Add particle into particle array
-function addGravityPoint(x, y) {
-  gravityPointArray.push(new GravityPoint(x, y));
-}
-
-//Animate the canvas
-function animate() {
-  requestAnimationFrame(animate);
-  //ctx.fillStyle = "rgba(0,0,0,0.2)";
-  ctx.clearRect(0, 0, innerWidth, innerWidth);
-  for (let i = 0; i < particleArray.length; i++) {
-    particleArray[i].update();
-  }
-
-  for (let i = 0; i < gravityPointArray.length; i++) {
-    gravityPointArray[i].update();
-  }
-}
-
 //Particle class
 class Particle {
   constructor() {
-    this.radius = randomNumFromInterval(3, 5);
+    this.radius = randomNumFromInterval(3, 3);
 
     this.pos = {
       x: randomNumFromInterval(this.radius, innerWidth - this.radius),
@@ -82,8 +55,8 @@ class Particle {
     };
 
     this.vel = {
-      x: randomNumFromInterval(-5, 5),
-      y: randomNumFromInterval(-5, 5),
+      x: randomNumFromInterval(-1, 1),
+      y: randomNumFromInterval(-1, 1),
     };
 
     this.acc = {
@@ -106,21 +79,7 @@ class Particle {
   update() {
     this.draw();
     this.attract();
-    // if (
-    //   this.pos.x + this.radius >= innerWidth ||
-    //   this.pos.x - this.radius <= 0
-    // ) {
-    //   this.vel.x = -this.vel.x;
-    //   this.acc.x = -this.acc.x;
-    // }
 
-    // if (
-    //   this.pos.y + this.radius >= innerHeight ||
-    //   this.pos.y - this.radius <= 0
-    // ) {
-    //   this.vel.y = -this.vel.y;
-    //   this.acc.y = -this.acc.y;
-    // }
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     this.pos.x += this.vel.x;
@@ -136,7 +95,7 @@ class Particle {
       let dy = point.pos.y - this.pos.y;
       let d = Math.hypot(dx, dy);
       if (d > point.radius) {
-        let force = point.radius / d;
+        let force = (30 * this.radius * point.radius) / (d * d);
         let forceX = force * (dx / d);
         let forceY = force * (dy / d);
         this.acc.x += forceX;
@@ -171,10 +130,10 @@ class GravityPoint {
     let gradient = ctx.createRadialGradient(
       this.pos.x,
       this.pos.y,
-      randomNumFromInterval(0, this.radius / 2),
+      randomNumFromInterval(this.radius * 0.6, this.radius * 0.8),
       this.pos.x,
       this.pos.y,
-      this.radius * 2
+      this.radius * 1.2
     );
     gradient.addColorStop(0, "black");
     gradient.addColorStop(1, "white");
@@ -186,18 +145,17 @@ class GravityPoint {
   update() {
     this.draw();
     this.attract();
-    if (
-      this.pos.x + this.radius >= innerWidth ||
-      this.pos.x - this.radius <= 0
-    ) {
-      this.vel.x = -this.vel.x;
+
+    if (this.pos.x - this.radius <= 0) {
+      this.pos.x = this.radius;
+    } else if (this.pos.x + this.radius >= innerWidth) {
+      this.pos.x = innerWidth - this.radius;
     }
 
-    if (
-      this.pos.y + this.radius >= innerHeight ||
-      this.pos.y - this.radius <= 0
-    ) {
-      this.vel.y = -this.vel.y;
+    if (this.pos.y - this.radius <= 0) {
+      this.pos.y = this.radius;
+    } else if (this.pos.y + this.radius >= innerHeight) {
+      this.pos.y = innerHeight - this.radius;
     }
 
     this.pos.x += this.vel.x;
@@ -213,19 +171,54 @@ class GravityPoint {
         let dx = point.pos.x - this.pos.x;
         let dy = point.pos.y - this.pos.y;
         let d = Math.hypot(dx, dy);
-        if (d > point.radius + this.radius) {
-          let force = (point.radius + this.radius) / d;
+        if (d >= this.radius) {
+          let force = (30 * this.radius * point.radius) / (d * d);
           let forceX = force * (dx / d);
           let forceY = force * (dy / d);
           this.vel.x += forceX;
           this.vel.y += forceY;
-          console.log(force);
+        }
+        //When collided merge points
+        else {
+          this.radius += point.radius * 0.5;
+          gravityPointArray.splice(index, 1);
         }
       }
     });
   }
 }
 
+//Add particle into particle array
+function addGravityPoint(x, y) {
+  gravityPointArray.push(new GravityPoint(x, y));
+}
+
+//Animate the canvas
+function animate() {
+  ctx.fillStyle = "rgba(0,0,0,0.2)";
+  ctx.fillRect(0, 0, innerWidth, innerWidth);
+
+  for (let i = 0; i < gravityPointArray.length; i++) {
+    if (gravityPointArray[i].radius < 150) {
+      gravityPointArray[i].update();
+    } else {
+      gravityPointArray.splice(i, 1);
+    }
+  }
+
+  for (let i = 0; i < particleArray.length; i++) {
+    particleArray[i].update();
+  }
+  requestAnimationFrame(animate);
+}
+
+function init() {
+  //Create particle array
+  particleArray.length = 0;
+  for (let i = 0; i < particleNumber; i++) {
+    particleArray.push(new Particle());
+  }
+}
 //Start the animation
 init();
-animate();
+requestAnimationFrame(animate);
