@@ -15,11 +15,13 @@ body {
   background-color: rgb(0, 0, 0);
   overflow: hidden;
 }
+
 .container {
-  padding: 10px;
+  padding: 10px 10px 0px 10px;
+  width: 100%;
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 

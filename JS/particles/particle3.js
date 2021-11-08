@@ -204,7 +204,7 @@ class GravityPoint {
     this.pos.y += this.vel.y;
   }
 
-  //Attraction between gravity point
+  //Attraction between gravity points
   attract() {
     this.vel.x = 0;
     this.vel.y = 0;
