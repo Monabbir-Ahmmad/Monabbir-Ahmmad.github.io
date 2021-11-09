@@ -18,7 +18,6 @@ body {
 
 .container {
   width: 100%;
-  padding: 10px 10px 0px 10px;
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -27,8 +26,54 @@ body {
 
 .container label {
   color: white;
-  text-transform: uppercase;
-  font-weight: bolder;
+  margin: 0 10px;
+}
+
+.switch {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  width: min-content;
+  padding: 5px;
+  margin: 0%;
+  top: 10px;
+  height: 40px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hide default HTML checkbox */
+.switch #menuBtn[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#menuBtn[type="checkbox"]:checked ~ #menu {
+  display: block;
+}
+
+#menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: max-content;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+}
+
+#menu div {
+  margin: 30px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#menu label {
+  color: black;
 }
 
 #keepVelocity[type="checkbox"] {
@@ -37,7 +82,6 @@ body {
 }
 
 #particleNum[type="number"] {
-  font-size: 16px;
   padding: 10px 0px 10px 10px;
   border-radius: 4px;
   border: 1px solid black;

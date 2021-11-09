@@ -74,7 +74,7 @@ window.requestAnimationFrame = (function () {
 //Particle class
 class Particle {
   constructor() {
-    this.radius = randomNumFromInterval(3, 3);
+    this.radius = 3;
 
     this.pos = {
       x: randomNumFromInterval(this.radius, innerWidth - this.radius),
@@ -247,7 +247,7 @@ function collapseGravityPoint() {
 //Animate the canvas
 function animate() {
   ctx.fillStyle = "rgba(0,0,0,0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.width);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   collapseGravityPoint();
 

@@ -140,7 +140,7 @@ function particleConnect() {
 //Animate the canvas
 function animate() {
   requestAnimationFrame(animate);
-  ctx.clearRect(0, 0, innerWidth, innerWidth);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let i = 0; i < particleArray.length; i++) {
     particleArray[i].update();
   }

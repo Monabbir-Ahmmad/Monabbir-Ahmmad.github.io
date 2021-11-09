@@ -13,15 +13,25 @@
     <!-- main body -->
     <div class="container">
       <label>Click to add black holes</label>
-      <div>
-        <label>Black hole keep velocity</label>
-        <input id="keepVelocity" type="checkbox" />
-      </div>
-      <div>
-        <label>Number of particles</label>
-        <input id="particleNum" type="number" min="1" value="100" />
-      </div>
+      <label class="switch">
+        <img
+          src="https://img.icons8.com/ios-glyphs/30/000000/sorting-options.png"
+        />
+        <input type="checkbox" id="menuBtn" />
+
+        <div id="menu">
+          <div>
+            <label>Black hole velocity</label>
+            <input id="keepVelocity" type="checkbox" />
+          </div>
+          <div>
+            <label>Number of particles</label>
+            <input id="particleNum" type="number" min="1" value="100" />
+          </div>
+        </div>
+      </label>
     </div>
+
     <canvas></canvas>
 
     <!-- javascript link -->
