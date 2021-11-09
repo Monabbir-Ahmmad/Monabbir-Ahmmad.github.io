@@ -1,5 +1,3 @@
-import { randomNumFromInterval, randomColor } from "../utility.js";
-
 const canvas = document.querySelector("canvas");
 const inputParticleNum = document.getElementById("particleNum");
 const checkKeepVel = document.getElementById("keepVelocity");
@@ -31,6 +29,16 @@ let forceScale = 30; //Force scale to balance gravity between gravity points
 //constants
 const fps = 240;
 const G = 60 / fps;
+
+//Get random number form range
+function randomNumFromInterval(min, max) {
+  return Math.random() * (max - min + 1) + min;
+}
+
+//Get random color form color array
+function randomColor(colors) {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
 //When window is resized reset canvas
 window.addEventListener("resize", () => {
