@@ -2,17 +2,13 @@ import { randomNumFromInterval, randomColor } from "../utility.js";
 
 const canvas = document.querySelector("canvas");
 const inputParticleNum = document.getElementById("particleNum");
+const checkKeepVel = document.getElementById("keepVelocity");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const ctx = canvas.getContext("2d");
-ctx.fillStyle = "rgba(0,0,0,0.2)";
-ctx.fillRect(0, 0, innerWidth, innerWidth);
 
-//Particle attributes
-const particleArray = [];
-let particleNumber = inputParticleNum.value;
 const colorArray = [
   "rgba(200,100,100)",
   "rgba(100,200,100)",
@@ -23,8 +19,18 @@ const colorArray = [
   "rgba(250,250,250)",
 ];
 
+//Particle attributes
+const particleArray = [];
+let particleNumber = inputParticleNum.value;
+
 //Gravity point attributes
 const gravityPointArray = [];
+let keepVel = false;
+let forceScale = 30; //Force scale to balance gravity between gravity points
+
+//constants
+const fps = 240;
+const G = 60 / fps;
 
 //When window is resized reset canvas
 window.addEventListener("resize", () => {
@@ -39,10 +45,23 @@ inputParticleNum.addEventListener("input", () => {
   init();
 });
 
+//Change force scale
+checkKeepVel.addEventListener("change", (event) => {
+  keepVel = event.target.checked;
+  forceScale = keepVel ? 0.15 : 30;
+});
+
 //When mouse is clicked within canvas
 canvas.addEventListener("click", (event) => {
   addGravityPoint(event.x, event.y);
 });
+
+//Overriding the request animation function
+window.requestAnimationFrame = (function () {
+  return function (callback) {
+    window.setTimeout(callback, 1000 / fps);
+  };
+})();
 
 //Particle class
 class Particle {
@@ -90,12 +109,13 @@ class Particle {
   attract() {
     this.acc.x = 0;
     this.acc.y = 0;
+
     gravityPointArray.forEach((point) => {
       let dx = point.pos.x - this.pos.x;
       let dy = point.pos.y - this.pos.y;
       let d = Math.hypot(dx, dy);
       if (d > point.radius) {
-        let force = (30 * this.radius * point.radius) / (d * d);
+        let force = (G * 30 * this.radius * point.radius) / (d * d);
         let forceX = force * (dx / d);
         let forceY = force * (dy / d);
         this.acc.x += forceX;
@@ -108,7 +128,9 @@ class Particle {
 //Gravity point class
 class GravityPoint {
   constructor(x, y) {
-    this.radius = randomNumFromInterval(20, 40);
+    this.radius = randomNumFromInterval(15, 25);
+    this.color = randomColor(colorArray);
+    this.collapse = false;
 
     this.pos = {
       x: x,
@@ -119,8 +141,6 @@ class GravityPoint {
       x: 0,
       y: 0,
     };
-
-    this.color = randomColor(colorArray);
   }
 
   //Draw the gravity point
@@ -146,16 +166,28 @@ class GravityPoint {
     this.draw();
     this.attract();
 
-    if (this.pos.x - this.radius <= 0) {
-      this.pos.x = this.radius;
-    } else if (this.pos.x + this.radius >= innerWidth) {
-      this.pos.x = innerWidth - this.radius;
+    if (this.pos.x - this.radius < 0) {
+      this.pos.x = this.radius + 2;
+      this.vel.x = -this.vel.x * 0.5;
+    } else if (this.pos.x + this.radius > innerWidth) {
+      this.pos.x = innerWidth - this.radius - 2;
+      this.vel.x = -this.vel.x * 0.5;
     }
 
-    if (this.pos.y - this.radius <= 0) {
-      this.pos.y = this.radius;
-    } else if (this.pos.y + this.radius >= innerHeight) {
-      this.pos.y = innerHeight - this.radius;
+    if (this.pos.y - this.radius < 0) {
+      this.pos.y = this.radius + 2;
+      this.vel.y = -this.vel.y * 0.5;
+    } else if (this.pos.y + this.radius > innerHeight) {
+      this.pos.y = innerHeight - this.radius - 2;
+      this.vel.y = -this.vel.y * 0.5;
+    }
+
+    if (this.radius > 100) {
+      this.collapse = true;
+    }
+
+    if (this.collapse) {
+      this.radius *= 0.9;
     }
 
     this.pos.x += this.vel.x;
@@ -164,15 +196,17 @@ class GravityPoint {
 
   //Attraction between gravity points
   attract() {
-    this.vel.x = 0;
-    this.vel.y = 0;
+    if (!keepVel) {
+      this.vel.x = 0;
+      this.vel.y = 0;
+    }
     gravityPointArray.forEach((point, index) => {
       if (this != point) {
         let dx = point.pos.x - this.pos.x;
         let dy = point.pos.y - this.pos.y;
         let d = Math.hypot(dx, dy);
         if (d >= this.radius) {
-          let force = (30 * this.radius * point.radius) / (d * d);
+          let force = (G * forceScale * this.radius * point.radius) / (d * d);
           let forceX = force * (dx / d);
           let forceY = force * (dy / d);
           this.vel.x += forceX;
@@ -193,22 +227,30 @@ function addGravityPoint(x, y) {
   gravityPointArray.push(new GravityPoint(x, y));
 }
 
-//Animate the canvas
-function animate() {
-  ctx.fillStyle = "rgba(0,0,0,0.2)";
-  ctx.fillRect(0, 0, innerWidth, innerWidth);
-
+//Collapse gravity point
+function collapseGravityPoint() {
   for (let i = 0; i < gravityPointArray.length; i++) {
-    if (gravityPointArray[i].radius < 150) {
-      gravityPointArray[i].update();
-    } else {
+    if (gravityPointArray[i].radius < 2 && gravityPointArray[i].collapse) {
       gravityPointArray.splice(i, 1);
     }
+  }
+}
+
+//Animate the canvas
+function animate() {
+  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.width);
+
+  collapseGravityPoint();
+
+  for (let i = 0; i < gravityPointArray.length; i++) {
+    gravityPointArray[i].update();
   }
 
   for (let i = 0; i < particleArray.length; i++) {
     particleArray[i].update();
   }
+
   requestAnimationFrame(animate);
 }
 

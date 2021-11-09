@@ -18,8 +18,12 @@
     <div class="container">
       <label>Click to add black holes</label>
       <div>
+        <label>Black hole keep velocity</label>
+        <input id="keepVelocity" type="checkbox" />
+      </div>
+      <div>
         <label>Number of particles</label>
-        <input id="particleNum" type="number" min="1" value="30" />
+        <input id="particleNum" type="number" min="1" value="100" />
       </div>
     </div>
     <canvas></canvas>
@@ -27,6 +31,6 @@
     <!-- javascript link -->
     <script type="module" src="JS/utility.js"></script>
 
-    <script type="module" src="JS/particles/particle3.js"></script>
+    <script type="module" src="JS/Particles/particle3.js"></script>
   </body>
 </html>

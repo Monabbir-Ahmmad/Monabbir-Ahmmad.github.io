@@ -17,30 +17,35 @@ body {
 }
 
 .container {
-  padding: 10px 10px 0px 10px;
   width: 100%;
+  padding: 10px 10px 0px 10px;
   position: absolute;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
 .container label {
   color: white;
-  font-size: 16px;
   text-transform: uppercase;
   font-weight: bolder;
 }
 
-.container input[type="number"] {
-  font-size: 16px;
+#keepVelocity[type="checkbox"] {
   margin: 0 10px;
-  padding: 10px 0px 10px 10px;
-  outline: none;
-  border: none;
+  transform: scale(170%);
 }
 
-.container input[type="number"]::-webkit-inner-spin-button,
+#particleNum[type="number"] {
+  font-size: 16px;
+  padding: 10px 0px 10px 10px;
+  border-radius: 4px;
+  border: 1px solid black;
+  outline: none;
+  margin-left: 10px;
+}
+
+#particleNum[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
   margin: -10px 0px;
