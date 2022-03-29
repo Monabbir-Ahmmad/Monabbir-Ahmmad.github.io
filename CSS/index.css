@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.links {
+  margin: 20px;
+  padding: 20px;
+  background: wheat;
+  text-decoration: none;
+  font-size: 3rem;
+  color: white;
+}

@@ -1,0 +1,79 @@
+#typeWriter {
+  position: relative;
+  font-size: 4rem;
+  margin-bottom: 40px;
+}
+
+#typeWriter::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 100;
+  width: 4px;
+  height: 2ch;
+  background-color: #000;
+  animation: blink 0.7s ease infinite;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+.intro-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.intro-item {
+  margin: 20px 30px;
+}
+
+#intro-btn-about {
+  cursor: pointer;
+  position: relative;
+  padding: 1.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 1;
+  background: white;
+}
+
+#intro-btn-about::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 2px solid #000;
+  transition: all 0.5s ease;
+  transform: skewX(-20deg);
+}
+
+#intro-btn-about::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 2px solid #000;
+  transition: all 0.5s ease;
+  transform: skewX(20deg);
+}
+#intro-btn-about:hover {
+  color: white;
+}
+#intro-btn-about:hover::before,
+#intro-btn-about:hover::after {
+  transform: skew(0deg);
+  background: #000;
+}

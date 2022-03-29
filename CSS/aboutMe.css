@@ -1,0 +1,161 @@
+#about-container {
+  padding-top: 10vh;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  overflow: hidden;
+  background: #000;
+  transition: all 1s ease;
+}
+
+.about-title {
+  position: relative;
+  font-size: 2.5em;
+  font-weight: 500;
+  color: white;
+  text-transform: uppercase;
+  transform: scale(0);
+  transition: all 1s ease;
+}
+
+.about-title::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  left: 30%;
+  height: 4px;
+  width: 40%;
+  background-color: white;
+  transition: all 1s ease 1s;
+  transform: scaleX(0);
+}
+
+.about-details-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.about-details-wrapper {
+  flex: 1;
+  margin: 2em;
+  padding: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+
+#about-bio {
+  font-size: 1.5em;
+  font-weight: lighter;
+  margin: 2em;
+  opacity: 0;
+  transform: translateY(500%);
+  transition: all 2s ease 1s;
+}
+
+.about-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  transform: translateX(-100vw);
+  transition: all 2s ease;
+}
+
+.about-profile-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.about-profile h1 {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.about-profile-item h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.about-profile-item h3 {
+  font-weight: 300;
+}
+
+.about-details-wrapper img {
+  width: 18rem;
+  height: 18rem;
+  object-fit: contain;
+  border-radius: 100em;
+  background-color: rgb(221, 221, 221);
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  transform: translate(200%);
+  transition: all 2s ease;
+}
+
+#about-btn-skills {
+  cursor: pointer;
+  color: white;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  transform: scale(0);
+  transition: all 1s ease 1s;
+}
+
+#about-btn-skills h2 {
+  animation: up-down 1.4s infinite;
+}
+
+#about-container.animation .about-title {
+  transform: scale(1);
+}
+
+#about-container.animation .about-title::after {
+  transform: scaleX(1);
+}
+
+#about-container.animation .about-details-wrapper img {
+  transform: translate(0%);
+}
+
+#about-container.animation #about-bio {
+  transform: translate(0%);
+  opacity: 1;
+}
+
+#about-container.animation .about-profile {
+  transform: translate(0%);
+}
+
+#about-container.animation #about-btn-skills {
+  transform: scale(1);
+}
+
+@keyframes up-down {
+  0%,
+  100% {
+    transform: translateY(50%);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .about-details-container {
+    flex-direction: column-reverse;
+  }
+}
