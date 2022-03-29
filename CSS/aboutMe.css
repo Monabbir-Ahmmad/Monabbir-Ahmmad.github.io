@@ -1,5 +1,4 @@
 #about-container {
-  padding-top: 10vh;
   width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -13,6 +12,7 @@
 }
 
 .about-title {
+  margin-top: 11vh;
   position: relative;
   font-size: 2.5em;
   font-weight: 500;
@@ -30,8 +30,6 @@
   height: 4px;
   width: 40%;
   background-color: white;
-  transition: all 1s ease 1s;
-  transform: scaleX(0);
 }
 
 .about-details-container {
@@ -124,7 +122,7 @@
 }
 
 #about-container.animation .about-title::after {
-  transform: scaleX(1);
+  animation: grow-underline 2s ease forwards;
 }
 
 #about-container.animation .about-details-wrapper img {
@@ -151,6 +149,16 @@
   }
   50% {
     transform: translateY(0%);
+  }
+}
+
+@keyframes grow-underline {
+  0%,
+  50% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
   }
 }
 
